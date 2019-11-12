@@ -4,7 +4,8 @@
 //
 //  Created by MacStudent on 2019-11-08.
 //  Copyright © 2019 MacStudent. All rights reserved.
-//
+// github link
+// https://github.com/maan-satveer/Satveer_C0769247_Notes.git
 
 import UIKit
 
@@ -36,9 +37,18 @@ self.navigationItem.rightBarButtonItem = self.editButtonItem
          let okAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let add = UIAlertAction(title: "AddItem", style: .default) { (action) in
             let txt = alertctrl.textFields![0]
-            self.folder!.append(txt.text!)
-            print(self.folder!)
-            self.tabledata.reloadData()
+            if self.folder!.contains(txt.text!){
+                let alert = UIAlertController(title: "Name Taken", message: "Please choose a different name", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+                alert.addAction(okAction)
+                self.present(alert, animated: true, completion: nil)
+            }
+            else{
+                self.folder!.append(txt.text!)
+                           print(self.folder!)
+                           self.tabledata.reloadData()
+            }
+           
         }
         alertctrl.addAction(okAction)
         alertctrl.addAction(add)
