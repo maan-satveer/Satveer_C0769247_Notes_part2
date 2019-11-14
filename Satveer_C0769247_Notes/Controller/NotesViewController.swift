@@ -9,13 +9,19 @@
 import UIKit
 
 class NotesViewController: UIViewController {
-
+    
+    @IBOutlet weak var textview: UITextView!
+    var Text_Note : String?
+    var text_string : To_do_TableViewController?
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        textview.text = Text_Note ?? ""
         // Do any additional setup after loading the view.
     }
-    
+    override func viewWillDisappear(_ animated: Bool) {
+          // text_string?.updateText(text: textview.text)
+        text_string?.updateText(text: textview.text)
+       }
 
     /*
     // MARK: - Navigation

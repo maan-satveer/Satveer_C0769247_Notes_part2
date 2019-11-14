@@ -10,9 +10,10 @@
 import UIKit
 
 class CellTableViewController: UITableViewController {
-    var folder : [String]?
-    var folders:UITextField!
-    @IBOutlet var tabledata: UITableView!
+    //var folder : [String]?
+    var currentIndex = -1
+   @IBOutlet var tabledata: UITableView!
+    // var folder = Folder(folderName: "", notes: [String]())
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -20,9 +21,12 @@ class CellTableViewController: UITableViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
+               self.navigationItem.rightBarButtonItem?.tintColor = .white
 self.navigationItem.rightBarButtonItem = self.editButtonItem
-        self.navigationItem.title = "Folders"
-        folder = []
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+              self.view.backgroundColor = .lightGray
+        //folder = []
     }
      // Create new folder
     @IBAction func new_folder(_ sender: UIBarButtonItem) {
@@ -36,23 +40,35 @@ self.navigationItem.rightBarButtonItem = self.editButtonItem
         }
          let okAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let add = UIAlertAction(title: "AddItem", style: .default) { (action) in
-            let txt = alertctrl.textFields![0]
-            if self.folder!.contains(txt.text!){
-                let alert = UIAlertController(title: "Name Taken", message: "Please choose a different name", preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
-                alert.addAction(okAction)
-                self.present(alert, animated: true, completion: nil)
+            let text_name = alertctrl.textFields![0]
+            var foldername = Folder(folderName: text_name.text!, notes: [] )
+            var flag = false
+            for i in Folder.folders{
+               let name = foldername.folderName
+            if name == i.folderName{
+            flag = true
+            break
             }
-            else{
-                self.folder!.append(txt.text!)
-                           print(self.folder!)
-                           self.tabledata.reloadData()
             }
+               if flag == true{
+                                   let alert = UIAlertController(title: "Name Taken", message: "Please choose a different name", preferredStyle: .alert)
+                                   let okAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+                                   alert.addAction(okAction)
+                                   self.present(alert, animated: true, completion: nil)
+                               }
+                              else{
+                                   foldername = Folder(folderName: text_name.text!, notes: [String]())
+                                   Folder.folders.append(foldername)
+                                   
+                                   print(Folder.folders)
+                                              self.tabledata.reloadData()
+                              }
            
         }
         alertctrl.addAction(okAction)
         alertctrl.addAction(add)
         self.present(alertctrl, animated: true, completion: nil)
+        alertctrl.view.tintColor = UIColor.black
     }
     // MARK: - Table view data source
 
@@ -63,22 +79,28 @@ self.navigationItem.rightBarButtonItem = self.editButtonItem
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return folder?.count ?? 0
+        return Folder.folders.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+       // let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         if let cell = tableView.dequeueReusableCell(withIdentifier: "cell"){
-            let foldername = folder![indexPath.row]
-                cell.textLabel?.text = foldername
-                   cell.imageView?.image = UIImage(named: "folder-icon")
+            let f_name = Folder.folders[indexPath.row].folderName
+            cell.textLabel?.text = f_name
+            cell.imageView?.image = UIImage(named: "folder-icon")
+            cell.detailTextLabel?.text = "\(Folder.folders[indexPath.row].notes.count)"
+            cell.detailTextLabel?.textColor = UIColor.white
                           return cell
         }
         // Configure the cell...
 
         return UITableViewCell()
     }
+    func reloadfolder()
+    {
+        tableView.reloadData()
+        }
     
 
     
@@ -95,7 +117,7 @@ self.navigationItem.rightBarButtonItem = self.editButtonItem
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-                 folder?.remove(at: indexPath.row)
+            Folder.folders.remove(at: indexPath.row)
               // Delete the row from the data source
                    tableView.deleteRows(at: [indexPath], with: .automatic)
                    tableView.reloadData()
@@ -114,30 +136,31 @@ self.navigationItem.rightBarButtonItem = self.editButtonItem
         return false
      }
      override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-         let move = self.folder![sourceIndexPath.row]
-        folder?.remove(at: sourceIndexPath.row)
-         folder?.insert(move, at: destinationIndexPath.row)
-          debugPrint("\(sourceIndexPath.row) => \(destinationIndexPath.row)")
-         
+
      }
     
-
+  
     
     // Override to support conditional rearranging of the table view.
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the item to be re-orderable.
         return true
     }
-    
-
-    /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+// In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        if let detail = segue.destination as? To_do_TableViewController{
+                   detail.FoldersDelegate = self
+                   
+                   if let tableViewCell = sender as? UITableViewCell{
+                       if let index = tableView.indexPath(for: tableViewCell)?.row {
+                       currentIndex = index
+                       }
+                   }
+               }
     }
-    */
+    
 
 }

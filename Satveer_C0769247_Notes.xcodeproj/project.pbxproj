@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B96CB01237B49BB00052555 /* Storage_folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B96CB00237B49BB00052555 /* Storage_folder.swift */; };
 		9BE1C00A237A0AE2001D0177 /* To-do-TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE1C009237A0AE2001D0177 /* To-do-TableViewController.swift */; };
 		9BE1C00E237A10B6001D0177 /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE1C00D237A10B6001D0177 /* NotesViewController.swift */; };
 		9BEBE7912375F60D00C6A3AE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEBE7902375F60D00C6A3AE /* AppDelegate.swift */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9B96CB00237B49BB00052555 /* Storage_folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage_folder.swift; sourceTree = "<group>"; };
 		9BE1C009237A0AE2001D0177 /* To-do-TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "To-do-TableViewController.swift"; sourceTree = "<group>"; };
 		9BE1C00D237A10B6001D0177 /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
 		9BEBE78D2375F60D00C6A3AE /* Satveer_C0769247_Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Satveer_C0769247_Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,6 +83,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9B96CB02237B49CB00052555 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9B96CB00237B49BB00052555 /* Storage_folder.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		9B96CB03237B49D700052555 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9BE1C009237A0AE2001D0177 /* To-do-TableViewController.swift */,
+				9BEBE7C02375F79800C6A3AE /* CellTableViewController.swift */,
+				9BE1C00D237A10B6001D0177 /* NotesViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		9B96CB04237B49F600052555 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9BEBE7962375F60D00C6A3AE /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		9BEBE7842375F60D00C6A3AE = {
 			isa = PBXGroup;
 			children = (
@@ -104,16 +132,15 @@
 		9BEBE78F2375F60D00C6A3AE /* Satveer_C0769247_Notes */ = {
 			isa = PBXGroup;
 			children = (
+				9B96CB04237B49F600052555 /* View */,
+				9B96CB03237B49D700052555 /* Controller */,
+				9B96CB02237B49CB00052555 /* Model */,
 				D000B58123777B8B001FD302 /* Satveer_C0769247_Notes.entitlements */,
 				9BEBE7902375F60D00C6A3AE /* AppDelegate.swift */,
 				9BEBE7922375F60D00C6A3AE /* SceneDelegate.swift */,
-				9BEBE7962375F60D00C6A3AE /* Main.storyboard */,
-				9BE1C009237A0AE2001D0177 /* To-do-TableViewController.swift */,
 				9BEBE7992375F60F00C6A3AE /* Assets.xcassets */,
 				9BEBE79B2375F60F00C6A3AE /* LaunchScreen.storyboard */,
 				9BEBE79E2375F60F00C6A3AE /* Info.plist */,
-				9BEBE7C02375F79800C6A3AE /* CellTableViewController.swift */,
-				9BE1C00D237A10B6001D0177 /* NotesViewController.swift */,
 			);
 			path = Satveer_C0769247_Notes;
 			sourceTree = "<group>";
@@ -270,6 +297,7 @@
 				9BEBE7912375F60D00C6A3AE /* AppDelegate.swift in Sources */,
 				9BE1C00E237A10B6001D0177 /* NotesViewController.swift in Sources */,
 				9BE1C00A237A0AE2001D0177 /* To-do-TableViewController.swift in Sources */,
+				9B96CB01237B49BB00052555 /* Storage_folder.swift in Sources */,
 				9BEBE7932375F60D00C6A3AE /* SceneDelegate.swift in Sources */,
 				9BEBE7C12375F79800C6A3AE /* CellTableViewController.swift in Sources */,
 			);
