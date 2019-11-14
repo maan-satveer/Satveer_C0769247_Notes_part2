@@ -69,16 +69,6 @@ class To_do_TableViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let cell = tableView.cellForRow(at: indexPath){
-            if cell.accessoryType == .detailButton{
-                cell.accessoryType = .checkmark
-            }
-            else{
-                cell.accessoryType = .detailButton
-            }
-        }
-    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -146,7 +136,7 @@ class To_do_TableViewController: UITableViewController {
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
             let deleteAction = UIAlertAction(title: "Delete", style: .default) { (action ) in
              
-                
+                self.deleteRow()
             }
             alertController.addAction(cancelAction)
             alertController.addAction(deleteAction)
@@ -170,7 +160,32 @@ class To_do_TableViewController: UITableViewController {
 //        Folder.folders.append(folder_notes)
 //           tableView.reloadData()
        }
-    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+          tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+      }
+      override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+          tableView.cellForRow(at: indexPath)?.accessoryType = .detailButton
+      }
+     func deleteRow()
+         {
+    //         selectedRows = tableView.indexPathsForSelectedRows{
+            selectedRows = tableView.indexPathsForSelectedRows!
+                var item = [String]()
+                for indexPath in selectedRows!{
+                    item.append(Folder.folders[(FoldersDelegate?.currentIndex)!].notes[indexPath.row])
+                }
+                for i in item {
+                    if let index = Folder.folders[(FoldersDelegate?.currentIndex)!].notes.firstIndex(of: i)
+                    {
+                        Folder.folders[(FoldersDelegate?.currentIndex)!].notes.remove(at: index)
+                    }
+                }
+                tableView.reloadData()
+                //tableView.beginUpdates()
+                //tableView.deleteRows(at: selectedRows!, with: .automatic)
+                //tableView.endUpdates()
+                FoldersDelegate?.tableView.reloadData()
+            }
    
     
 
