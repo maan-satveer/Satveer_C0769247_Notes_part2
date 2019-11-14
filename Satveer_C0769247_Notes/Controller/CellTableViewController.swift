@@ -89,6 +89,7 @@ self.navigationItem.rightBarButtonItem = self.editButtonItem
             let f_name = Folder.folders[indexPath.row].folderName
             cell.textLabel?.text = f_name
             cell.imageView?.image = UIImage(named: "folder-icon")
+           
             cell.detailTextLabel?.text = "\(Folder.folders[indexPath.row].notes.count)"
             cell.detailTextLabel?.textColor = UIColor.black
                           return cell

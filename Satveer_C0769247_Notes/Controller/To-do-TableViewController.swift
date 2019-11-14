@@ -112,32 +112,46 @@ class To_do_TableViewController: UITableViewController {
        
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
-        if let detail = segue.destination as?
-                   NotesViewController{
+        if let detail = segue.destination as? NotesViewController{
                    detail.text_string = self
              
                if let tableViewCell = sender as? UITableViewCell{
                     if let index = tableView.indexPath(for: tableViewCell)?.row {
-        //              detailview.textString = notes![index]
                         detail.Text_Note = Folder.folders[(FoldersDelegate?.currentIndex)!].notes[index]
-        //                detailview.textString = FoldersStucture.foldersData[index].notes
                           currentIndex = index
         //            }
                       }
             }
+//            if let moveFolder = segue.destination as? MoveViewController{
+//                               moveFolder.notesDelegate = self
+//                
+//            }
         //
             
                 }
     }
+    func moveNotes(index: Int){
+          
+          selectedRows = tableView.indexPathsForSelectedRows!
+          
+          for i in selectedRows!{
+              let move = Folder.folders[(FoldersDelegate?.currentIndex)!].notes[i.row]
+              Folder.folders[index].notes.append(move)
+          }
+          
+          deleteRow()
+      }
     
     
     @IBAction func delete_object(_ sender: Any) {
         let alertController = UIAlertController(title: "Delete", message: "Are you sure", preferredStyle: .alert)
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+             cancelAction.setValue(UIColor.brown, forKey: "titleTextColor")
             let deleteAction = UIAlertAction(title: "Delete", style: .default) { (action ) in
              
                 self.deleteRow()
             }
+            deleteAction.setValue(UIColor.red, forKey: "titleTextColor")
             alertController.addAction(cancelAction)
             alertController.addAction(deleteAction)
              self.present(alertController, animated: true, completion: nil)
@@ -157,8 +171,7 @@ class To_do_TableViewController: UITableViewController {
                Folder.folders[(FoldersDelegate?.currentIndex)!].notes[currentIndex] = text
                 let indexPath = IndexPath(item: currentIndex, section: 0)
                tableView.reloadRows(at: [indexPath], with: .middle)
-//        Folder.folders.append(folder_notes)
-//           tableView.reloadData()
+
        }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
           tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
@@ -169,7 +182,7 @@ class To_do_TableViewController: UITableViewController {
      func deleteRow()
          {
     //         selectedRows = tableView.indexPathsForSelectedRows{
-            selectedRows = tableView.indexPathsForSelectedRows!
+            selectedRows = tableView.indexPathsForSelectedRows
                 var item = [String]()
                 for indexPath in selectedRows!{
                     item.append(Folder.folders[(FoldersDelegate?.currentIndex)!].notes[indexPath.row])
@@ -181,9 +194,6 @@ class To_do_TableViewController: UITableViewController {
                     }
                 }
                 tableView.reloadData()
-                //tableView.beginUpdates()
-                //tableView.deleteRows(at: selectedRows!, with: .automatic)
-                //tableView.endUpdates()
                 FoldersDelegate?.tableView.reloadData()
             }
    
